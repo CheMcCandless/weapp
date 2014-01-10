@@ -7,7 +7,7 @@ from abc import ABCMeta, abstractmethod
 from string import Template
 import logging
 
-def __parse_msg(self,xml):
+def __parse_msg(xml):
     # To parse the xml message receive from user post
 
     logging.debug("Begin to parse message xml")
@@ -41,9 +41,9 @@ def load_msg(xml):
         "text" : __load_text_msg
     }
 
-    if msg_info.has_key(info["MsgType"]):
+    if msg_dict.has_key(info["MsgType"]):
         logging.debug("Message type:%s" % info["MsgType"])
-        return msg_dict [info["MsgType"](info)]
+        return msg_dict [info["MsgType"]](info)
     else:
         logging.debug("None message type[%s]" % info["MsgType"])
 

@@ -10,6 +10,7 @@ class Weapp(object):
         self.__setting = setting
         pass
 
-    def run(self):
-        logging.debug("Run weapp")
-        return TextMessage("textmessage").getForPut("test","test")
+    def run(self,postData):
+        logging.debug("Run weapp with post data:\n%s" % postData)
+        msg = load_msg(postData)
+        return msg.getForPut("test","test")

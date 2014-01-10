@@ -20,6 +20,6 @@ setting = {
 @post('/')
 def index():
     app = Weapp(setting)
-    return app.run()
+    return app.run(request.body.read())
 
 run(host='localhost', port=8080)
