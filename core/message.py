@@ -1,11 +1,14 @@
 #-*- coding: utf-8 -*-
 """Moudel of message classes"""
 
+SET_TEXT_END = "TEXT_END"
+
 import time
 import xml.etree.ElementTree as ET
 from abc import ABCMeta, abstractmethod
 from string import Template
 import logging
+
 
 def __parse_msg(xml):
     # To parse the xml message receive from user post
@@ -19,15 +22,15 @@ def __parse_msg(xml):
     logging.debug("Success to parse" + "\n" + msg.__str__())
     return msg
 
-def __load_text_msg(info):
+def __load_text_msg(info,msgSetting):
     logging.debug("Begin to load text message")
-    return TextMessage (info["Content"])
+    return TextMessage (info["Content"],msgSetting)
 
 
 
 
 # Load from xml existed
-def load_msg(xml):
+def load_msg(xml,msgSetting):
     """ Load message from xml.
 
     @param [string] xml
@@ -43,7 +46,7 @@ def load_msg(xml):
 
     if msg_dict.has_key(info["MsgType"]):
         logging.debug("Message type:%s" % info["MsgType"])
-        return msg_dict [info["MsgType"]](info)
+        return msg_dict [info["MsgType"]](info,msgSetting)
     else:
         logging.debug("None message type[%s]" % info["MsgType"])
 
@@ -63,8 +66,11 @@ class Message(object):
 
 
 class TextMessage(Message):
-    def __init__(self,content):
+    def __init__(self,content,msgSetting):
         logging.debug("Init textmessage[%s]" % content)
+
+        if   msgSetting.has_key(SET_TEXT_END):
+            content = content + msgSetting[SET_TEXT_END]
 
         xmlTlp = '''<xml>
         <ToUserName><![CDATA[$ToUserName]]></ToUserName>

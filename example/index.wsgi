@@ -14,7 +14,10 @@ logging.basicConfig(level=logging.DEBUG,
 debug(True)
 
 setting = {
-    "TEXT_END" : "Powered by JNRain R&C"
+    "message":{
+            "TEXT_END" : "Powered by JNRain R&C"
+    }
+
 }
 
 @post('/')
