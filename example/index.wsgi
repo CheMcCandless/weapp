@@ -13,10 +13,13 @@ logging.basicConfig(level=logging.DEBUG,
 
 debug(True)
 
+setting = {
+    "TEXT_END" : "Powered by JNRain R&C"
+}
 
-@route('/')
+@post('/')
 def index():
-    app = Weapp()
+    app = Weapp(setting)
     return app.run()
 
 run(host='localhost', port=8080)
