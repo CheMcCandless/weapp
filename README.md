@@ -4,4 +4,4 @@ A python wechat framework on sae
 
 #depends
 
-requests,bottle
+requests,bottle,python-memcache

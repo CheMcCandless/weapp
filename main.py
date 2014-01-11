@@ -3,14 +3,16 @@
 """Main moudel of weapp"""
 
 from core.message import *
+from core import setting
 
 class Weapp(object):
-    def __init__(self,setting):
-        logging.debug("Init weapp with setting\n%s" % setting.__str__())
-        self.__setting = setting
+
+    def __init__(self,settingDict):
+        logging.debug("Init weapp")
+        setting.set(settingDict)
 
 
     def run(self,postData):
         logging.debug("Run weapp with post data:\n%s" % postData)
-        msg = load_msg(postData,self.__setting["message"])
+        msg = load_msg(postData)
         return msg.getForPut("test","test")
