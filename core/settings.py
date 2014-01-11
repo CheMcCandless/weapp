@@ -3,7 +3,7 @@ import logging
 MOD_SETTING_MSG = "message"
 SET_TEXT_END = "textend"
 
-MOD_SETTING_SEVER = "server"
+MOD_SETTING_SERVER = "server"
 SET_SERVER_ONSAE = "onsae"
 SET_SERVER_MEMCACHE = "mem"
 

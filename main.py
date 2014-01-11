@@ -25,7 +25,7 @@ class WeApp(object):
         result = self.__control.run(msg,scope)
         scopeCon.update()
 
-        return result.getForPut("falling","falling")
+        return result.getForPut(msg.getServer(),msg.getOpenID())
 
     def _onInit(self):
         pass

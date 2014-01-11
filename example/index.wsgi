@@ -15,7 +15,7 @@ debug(True)
 
 setting = {
     "message":{
-            "textend" : "Powered by JNRain R&C"
+            "textend" : "\nPowered by JNRain R&C"
     },
     "server":{
             "onsae" : False,
