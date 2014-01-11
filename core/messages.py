@@ -11,6 +11,24 @@ import logging
 
 import settings
 
+VIEW_TYPE = "type"
+VIEW_TEXT = "content"
+VIEW_TYPE_TEXT = "text"
+
+def loadview(viewcode,scope):
+    logging.debug ("Begin to load view:\n%s" % viewcode)
+    for i in viewcode:
+        t = Template(viewcode[i])
+        viewcode[i] = t.safe_substitute(scope)
+
+    viewdict = {
+        VIEW_TYPE_TEXT : loadview_text
+    }
+    return viewdict[viewcode[VIEW_TYPE]](viewcode)
+
+def loadview_text(viewcode):
+    return TextMessage(viewcode[VIEW_TEXT])
+
 
 def __parse_msg(xml):
     # To parse the xml message receive from user post

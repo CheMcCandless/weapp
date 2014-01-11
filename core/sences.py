@@ -1,7 +1,10 @@
+
+
 from scopes import *
+from messages import *
 class Sence(object):
     def __init__(self):
-        pass
+        self._R = {}
 
 
     def show(self,message,scope):
@@ -14,6 +17,15 @@ class Sence(object):
 
     def _onInput(self,message,scope):
         pass
+
+
+    def showView(self,viewName,scope):
+        viewcode = self._R[viewName]
+        return loadview(viewcode,scope)
+
+
+
+
 
 class SenceControl(object):
     def __init__(self):
@@ -32,7 +44,7 @@ class SenceControl(object):
             sence = self.__senceList[senceName]()
         else:
             sence = self.__mainSence()
-        sence._onInput(message,scope)
+        return sence._onInput(message,scope)
 
 
 

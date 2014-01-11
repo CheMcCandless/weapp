@@ -25,14 +25,14 @@ class WeApp(object):
         result = self.__control.run(msg,scope)
         scopeCon.update()
 
-        return result.getForPut()
+        return result.getForPut("falling","falling")
 
     def _onInit(self):
         pass
 
     def newSence(self,senceName,senceType):
-        self.__control.newSence(self,senceName,senceType)
+        self.__control.newSence(senceName,senceType)
 
     def setMainSence(self,senceType):
-        self.__control.setMainSence(self,senceType)
+        self.__control.setMainSence(senceType)
 
