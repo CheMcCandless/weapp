@@ -9,7 +9,7 @@ from abc import ABCMeta, abstractmethod
 from string import Template
 import logging
 
-import setting
+import settings
 
 
 def __parse_msg(xml):
@@ -49,10 +49,11 @@ def load_msg(xml):
     if msg_dict.has_key(info["MsgType"]):
         logging.debug("Message type:%s" % info["MsgType"])
 
-        return msg_dict [info["MsgType"]](info)
+        msg = msg_dict [info["MsgType"]](info)
     else:
         logging.debug("None message type[%s]" % info["MsgType"])
 
+    msg.setOpenID(info["FromUserName"])
 
 
 
@@ -61,20 +62,26 @@ class Message(object):
     __metaclass__ = ABCMeta
     def __init__(self):
         self._xml = ''          # XML string for the message
-
+        self.__openID = ''
 
     def getForPut(self,fromUserName,toUserName):
         logging.debug("Ready to put XML:\n%s" % self._xml)
         return self._xml
 
+    def setOpenID(self,openID):
+        self.__openID = openID
+
+    def getOpenID(self):
+        return self.__openID
+
 
 class TextMessage(Message):
     def __init__(self,content):
-        msgSetting = setting.read(setting.MOD_SETTING_MSG)
+        msgSetting = settings.read(settings.MOD_SETTING_MSG)
         logging.debug("Init textmessage[%s]" % content)
 
-        if   msgSetting.has_key(setting.SET_TEXT_END):
-            content = content + msgSetting[setting.SET_TEXT_END]
+        if   msgSetting.has_key(settings.SET_TEXT_END):
+            content = content + msgSetting[settings.SET_TEXT_END]
 
         xmlTlp = '''<xml>
         <ToUserName><![CDATA[$ToUserName]]></ToUserName>

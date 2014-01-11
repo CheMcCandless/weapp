@@ -2,14 +2,25 @@
 For keep var between code and view(and it will be stronge in memcached by openID)
 """
 KEY_SENCE = "_rainkey__sence"
+
 SCOPE_LIFETIME = 300        #The time scope existed in memcached
 
 
 from compatible import *
 import json
 
+def getSenceName(scope):
+    if scope.has_key(KEY_SENCE):
+        return scope[KEY_SENCE]
+    else:
+        return None
+
+def setSenceName(scope,senceName):
+    scope[KEY_SENCE] = senceName
+
+
 class ScopeControl(object):
-    def __init(self,openID):
+    def __init__(self,openID):
         self.__openID = openID
         self.__scope = self.__loadScope()
         logging.debug("scope inited:\n%s" % self.__scope.__str__())
@@ -38,11 +49,3 @@ class ScopeControl(object):
         logging.debug("scope update:\n%s" % scopeJSON)
 
 
-    def getSenceName(self):
-        if self.__scope.has_key(KEY_SENCE):
-            return self.__scope[KEY_SENCE]
-        else:
-            return None
-
-    def setSenceName(self,senceName):
-        self.__scope[KEY_SENCE] = senceName
