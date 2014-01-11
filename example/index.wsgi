@@ -17,7 +17,7 @@ setting = {
     "message":{
             "textend" : "Powered by JNRain R&C"
     },
-    "sever":{
+    "server":{
             "onsae" : False,
             "mem" : "127.0.0.1:12000"
     }

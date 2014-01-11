@@ -72,6 +72,7 @@ def load_msg(xml):
         logging.debug("None message type[%s]" % info["MsgType"])
 
     msg.setOpenID(info["FromUserName"])
+    msg.setServer(info["ToUserName"])
     return msg
 
 
@@ -85,7 +86,9 @@ class Message(object):
 
     def getForPut(self,fromUserName,toUserName):
         logging.debug("Ready to put XML:\n%s" % self._xml)
-        return self._xml
+        t = Template(self._xml)
+        xml = t.safe_substitute({"FromUserName":fromUserName,"ToUserName":toUserName,"CreateTime":time.time()})
+        return xml
 
     def setOpenID(self,openID):
         self.__openID = openID
@@ -93,6 +96,11 @@ class Message(object):
     def getOpenID(self):
         return self.__openID
 
+    def setServer(self,server):
+        self.__server = server
+
+    def getServer(self):
+        return self.__server
 
 class TextMessage(Message):
     def __init__(self,content):

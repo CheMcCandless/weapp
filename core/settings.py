@@ -3,9 +3,9 @@ import logging
 MOD_SETTING_MSG = "message"
 SET_TEXT_END = "textend"
 
-MOD_SETTING_SEVER = "sever"
-SET_SEVER_ONSAE = "onsae"
-SET_SEVER_MEMCACHE = "mem"
+MOD_SETTING_SEVER = "server"
+SET_SERVER_ONSAE = "onsae"
+SET_SERVER_MEMCACHE = "mem"
 
 __setting = {}
 import settings
