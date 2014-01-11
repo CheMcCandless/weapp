@@ -4,7 +4,7 @@ import settings
 
 def getmc():
     severSet = settings.read(settings.MOD_SETTING_SERVER)
-    if severSet[settings.MOD_SETTING_SERVER]:
+    if severSet[settings.SET_SERVER_ONSAE]:
         import pylibmc
         mc = pylibmc.Client()
         return mc
