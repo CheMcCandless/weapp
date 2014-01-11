@@ -1,7 +1,12 @@
 """The moudel for compatible to sae"""
-onsae = false
+import setting
+
 
 def getmc():
-    import memcache
-    mc = memcache.Client(['127.0.0.1:12333'])
-    return mc
+    severSet = setting.read(setting.MOD_SETTING_SEVER)
+    if severSet[setting.SET_SEVER_ONSAE]:
+        pass
+    else:
+        import memcache
+        mc = memcache.Client(severSet[setting.SET_SEVER_MEMCACHE])
+        return mc

@@ -15,7 +15,11 @@ debug(True)
 
 setting = {
     "message":{
-            "TEXT_END" : "Powered by JNRain R&C"
+            "textend" : "Powered by JNRain R&C"
+    },
+    "sever":{
+            "onsae" : False
+            "mem" : "127.0.0.1:12000"
     }
 
 }

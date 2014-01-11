@@ -1,7 +1,11 @@
 import logging
 
 MOD_SETTING_MSG = "message"
-SET_TEXT_END = "TEXT_END"
+SET_TEXT_END = "textend"
+
+MOD_SETTING_SEVER = "sever"
+SET_SEVER_ONSAE = "onsae"
+SET_SEVER_MEMCACHE = "mem"
 
 __setting = {}
 import setting
