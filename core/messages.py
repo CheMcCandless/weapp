@@ -54,6 +54,7 @@ def load_msg(xml):
         logging.debug("None message type[%s]" % info["MsgType"])
 
     msg.setOpenID(info["FromUserName"])
+    return msg
 
 
 

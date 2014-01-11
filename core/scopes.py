@@ -8,6 +8,7 @@ SCOPE_LIFETIME = 300        #The time scope existed in memcached
 
 from compatible import *
 import json
+import logging
 
 def getSenceName(scope):
     if scope.has_key(KEY_SENCE):

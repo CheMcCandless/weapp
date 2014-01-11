@@ -8,13 +8,13 @@ SET_SEVER_ONSAE = "onsae"
 SET_SEVER_MEMCACHE = "mem"
 
 __setting = {}
-import setting
+import settings
 def set(settingDict):
     logging.debug("Init setting:\n%s" % settingDict.__str__())
 
-    setting.__setting = settingDict
+    settings.__setting = settingDict
 
 def read(moudel):
     logging.debug("Read %s of setting:\n%s" %( moudel,__setting))
 
-    return setting.__setting[moudel]
+    return settings.__setting[moudel]

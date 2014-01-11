@@ -1,12 +1,12 @@
 """The moudel for compatible to sae"""
-import setting
+import settings
 
 
 def getmc():
-    severSet = setting.read(setting.MOD_SETTING_SEVER)
-    if severSet[setting.SET_SEVER_ONSAE]:
+    severSet = settings.read(settings.MOD_SETTING_SEVER)
+    if severSet[settings.SET_SEVER_ONSAE]:
         pass
     else:
         import memcache
-        mc = memcache.Client(severSet[setting.SET_SEVER_MEMCACHE])
+        mc = memcache.Client([severSet[settings.SET_SEVER_MEMCACHE]])
         return mc
