@@ -19,7 +19,7 @@ class WeApp(object):
         msg = load_msg(postData)
         self.__control = SenceControl()
         self._onInit()
-        scopeCon = ScopeControl(msg.getOpenID())
+        scopeCon = ScopeControl(msg.getOpenID(),msg.getServer())
         scope = scopeCon.getScope()
 
         result = self.__control.run(msg,scope)

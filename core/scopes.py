@@ -21,8 +21,8 @@ def setSenceName(scope,senceName):
 
 
 class ScopeControl(object):
-    def __init__(self,openID):
-        self.__openID = openID
+    def __init__(self,openID,sever):
+        self.__mckey = sever + "." + openID
         self.__scope = self.__loadScope()
         logging.debug("scope inited:\n%s" % self.__scope.__str__())
 
@@ -33,7 +33,7 @@ class ScopeControl(object):
     def __loadScope(self):
         logging.debug("Ready to load scope from memcache")
         mc = getmc()
-        scopeJSON = mc.get(self.__openID)
+        scopeJSON = mc.get(self.__mckey)
         scope = {}
 
         if scopeJSON is not None :
@@ -46,7 +46,7 @@ class ScopeControl(object):
     def update(self):
         mc = getmc()
         scopeJSON = json.dumps(self.__scope)
-        mc.set(self.__openID,scopeJSON,SCOPE_LIFETIME)
+        mc.set(self.__mckey,scopeJSON,SCOPE_LIFETIME)
         logging.debug("scope update:\n%s" % scopeJSON)
 
 
