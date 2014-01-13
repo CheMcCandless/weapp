@@ -193,5 +193,10 @@ class NewsMessage(Message):
             onexml = itemxml % (i[VIEW_NEWS_TITLE],i[VIEW_NEWS_DESCRIPTION],i[VIEW_NEWS_PICURL],i[VIEW_NEWS_URL])
             itemsxml.append(onexml)
 
+
+        if settings.read(settings.MOD_SETTING_MSG).has_key(settings.SET_NEWS_END):
+            i = settings.read(settings.MOD_SETTING_MSG)[settings.SET_NEWS_END]
+            itemsxml.append(itemxml % (i[VIEW_NEWS_TITLE],i[VIEW_NEWS_DESCRIPTION],i[VIEW_NEWS_PICURL],i[VIEW_NEWS_URL]))
+
         articlesxml = "".join(itemsxml)
-        self._xml = self._xml % (len(items[0]), articlesxml)
+        self._xml = self._xml % (len(itemsxml), articlesxml)
