@@ -2,6 +2,8 @@
 
 from scopes import *
 from messages import *
+from views import *
+
 class Sence(object):
     def __init__(self):
         self._R = {}
@@ -21,7 +23,8 @@ class Sence(object):
 
     def showView(self,viewName,scope):
         viewcode = self._R[viewName]
-        return loadview(viewcode,scope)
+        view = View(viewcode,scope)
+        return view.getMessage()
 
 
 

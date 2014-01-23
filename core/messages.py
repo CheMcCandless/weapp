@@ -35,10 +35,10 @@ def loadview(viewcode, scope):
         VIEW_TYPE_TEXT: loadview_text,
         VIEW_TYPE_NEWS: loadview_news
     }
-    return viewdict[viewcode[VIEW_TYPE]](viewcode)
+    return viewdict[viewcode[VIEW_TYPE]](viewcode,scope)
 
 
-def loadview_text(viewcode):
+def loadview_text(viewcode,scope):
     '''
     {
         "type" : "text",
@@ -48,7 +48,7 @@ def loadview_text(viewcode):
     return TextMessage(viewcode[VIEW_TEXT])
 
 
-def loadview_news(viewcode):
+def loadview_news(viewcode,scope):
     '''
     {
         "type" : "news",
@@ -56,8 +56,12 @@ def loadview_news(viewcode):
             {
                 "title" : title,
                 "description" : description,
-                "picurl" : picurl
-                "url" : url
+                "picurl" : picurl,
+                "url" : url,
+                "repeat" : {
+                    "to" : one,
+                    "list" : list
+                }
             },
             ...
         ]
@@ -168,6 +172,7 @@ class TextMessage(Message):
 class NewsMessage(Message):
 
     def __init__(self, *items):
+        logging.debug("Items:" + items.__str__())
         self._xml = '''<xml>
         <ToUserName><![CDATA[$ToUserName]]></ToUserName>
         <FromUserName><![CDATA[$FromUserName]]></FromUserName>

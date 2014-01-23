@@ -2,7 +2,7 @@ from core.sences import *
 
 class MainSence(Sence):
     def _onShow(self,input,scope):
-        scope["hi"] = "hello"
+        scope["hi"] = ["hello1","hehe2"]
         return self.showView("newsview",scope)
 
     def _onInput(self,input,scope):
@@ -15,13 +15,13 @@ class MainSence(Sence):
                 "content":"This is just a test $hi"
             },
             "newsview":{
-                "type":"news",
                 "items":[
                     {
-                        "title" : "Test$hi",
+                        "title" : "Test$one",
                         "description" : "None",
                         "picurl":"pic",
-                        "url":"www.baidu.com"
+                        "url":"www.baidu.com",
+                        "repeat":"one in hi"
                     },
                     {
                         "title" : "Test222$hi",
