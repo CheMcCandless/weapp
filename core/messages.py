@@ -195,7 +195,7 @@ class NewsMessage(Message):
         itemsxml = []
         for i in items[0]:
             logging.debug(i)
-            onexml = itemxml % (i[VIEW_NEWS_TITLE],i[VIEW_NEWS_DESCRIPTION],i[VIEW_NEWS_PICURL],i[VIEW_NEWS_URL])
+            onexml = itemxml % (i[VIEW_NEWS_TITLE],i.get(VIEW_NEWS_DESCRIPTION,""),i.get(VIEW_NEWS_PICURL,""),i.get(VIEW_NEWS_URL,""))
             itemsxml.append(onexml)
 
 
