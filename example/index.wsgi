@@ -9,7 +9,7 @@ sys.path.append("..")
 from myapp import *
 
 logging.basicConfig(level=logging.DEBUG,
-                    format='%(asctime)s %(filename)s[func:%(funcName)s][line:%(lineno)d] %(levelname)s %(message)s', datefmt='%a, %d %b %Y %H:%M:%S')
+                    format='%(asctime)s %(filename)s[func:%(funcName)s][line:%(lineno)d] %(levelname)s %(message)s\n', datefmt='%a, %d %b %Y %H:%M:%S')
 
 debug(True)
 

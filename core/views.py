@@ -1,7 +1,7 @@
 import logging
 import json
-from string import Template
 
+from litetemplate import *
 from messages import NewsMessage
 
 VIEW_ITEMS = "items"
@@ -29,7 +29,9 @@ class View:
         }
         """
         self.__initRepeat(viewcode,scope)
+        logging.debug("Scope after initrepeat:\n%s" % scope)
         self.__syncScope(viewcode,scope)
+        logging.debug("Scope after sync:\n%s" % scope)
         self.__message = NewsMessage(viewcode[VIEW_ITEMS])
 
 
@@ -38,14 +40,8 @@ class View:
         newitems = []
         for each in items:
           self.__spreadRepeat(viewcode,each,newitems,scope)
+    
         viewcode[VIEW_ITEMS] = newitems
-
-    def __makeOneName(self,array,i):
-        return "__array_" + array + i.__str__()
-
-    def __flatArray(self,array,scope):
-        for i in range(len(scope[array])):
-            scope[self.__makeOneName(array,i)] =  scope[array][i]
 
     def __spreadRepeat(self,viewcode,item,newitems,scope):
         repate = item.get(VIEW_REPEAT,None)
@@ -53,22 +49,22 @@ class View:
             lst = repate.split()
             one = lst[0]
             array = lst[2]
-            self.__flatArray(array,scope)
             eachjson = json.dumps(item)
-            t = Template(eachjson)
             
             for i in range(len(scope[array])):
-                newitem_json = t.safe_substitute({one:"$"+self.__makeOneName(array,i)})
+                newitem_json = eachjson.replace("${"+one,"${"+array+"["+str(i)+"]")
                 newitems.append(json.loads(newitem_json))
         else:
             newitems.append(item)
     
     def __syncScope(self,viewcode,scope):
         logging.debug("Scope before sync:\n%s" % scope)
+        logging.debug("View before sync:\n%s" % viewcode)
         items = viewcode[VIEW_ITEMS]
         items_json = json.dumps(items)
-        t = Template(items_json)
-        result_json = t.safe_substitute(scope)
+        t = LiteTemplate(items_json)
+        result_json = t.substitute(scope)
+        logging.debug("result_json after substitute:\n%s" % result_json)
         viewcode[VIEW_ITEMS] =  json.loads(result_json)
 
     def getMessage(self):

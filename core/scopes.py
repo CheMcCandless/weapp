@@ -3,7 +3,7 @@ For keep var between code and view(and it will be stronge in memcached by openID
 """
 KEY_SENCE = "_rainkey__sence"
 
-SCOPE_LIFETIME = 300        #The time scope existed in memcached
+SCOPE_LIFETIME = 300        # The time scope existed in memcached
 
 
 from compatible import *
@@ -44,9 +44,10 @@ class ScopeControl(object):
         return scope
 
     def update(self):
+        logging.debug("scope before update:\n%s" % self.__scope)
         mc = getmc()
         scopeJSON = json.dumps(self.__scope)
         mc.set(self.__mckey,scopeJSON,SCOPE_LIFETIME)
-        logging.debug("scope update:\n%s" % scopeJSON)
+       
 
 
