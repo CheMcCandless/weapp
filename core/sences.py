@@ -1,4 +1,5 @@
-
+import json
+import logging
 
 from scopes import *
 from messages import *
@@ -22,11 +23,18 @@ class Sence(object):
 
 
     def showView(self,viewName,scope):
-        viewcode = self._R[viewName]
+        viewcode = self.__getR()[viewName]
         view = View(viewcode,scope)
         return view.getMessage()
 
-
+    def __getR(self):
+        rfilename = self.__class__.__name__ + ".json"
+        rfile = open(rfilename)
+       
+        R = json.loads(rfile.read())
+        rfile.close()
+        logging.debug("The R load:\n%s" % R)
+        return R
 
 
 

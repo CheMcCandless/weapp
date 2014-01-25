@@ -1,0 +1,22 @@
+{
+    "mainview":{
+         "type":"text",
+                "content":"This is just a test $hi"
+    },
+   "newsview":{
+         "items":[
+         {
+              "title" : "Test${one}",
+              "url":"www.baidu.com",
+              "repeat":"one in hi"
+         },
+         {
+              "title" : "${hehe}",
+              "description" : "None",
+              "picurl":"pic",
+              "url":"www.baidu.com"
+         }
+         ]
+
+     }
+}
