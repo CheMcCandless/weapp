@@ -2,15 +2,7 @@ import logging
 import json
 
 from litetemplate import *
-from messages import NewsMessage
-
-VIEW_ITEMS = "items"
-VIEW_TITLE = "title"
-VIEW_DESCRIPTION = "description"
-VIEW_URL = "url"
-VIEW_PICURL = "picurl"
-VIEW_REPEAT = "repeat"
-VIEW_TAG = "tag"
+from messages import *
 
 class View:
     def __init__(self,viewcode,scope):

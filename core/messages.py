@@ -11,64 +11,13 @@ import json
 
 import settings
 
-VIEW_TYPE = "type"
-VIEW_TEXT = "content"
-VIEW_TYPE_TEXT = "text"
-
-VIEW_TYPE_NEWS = "news"
-VIEW_TYPE_ITEMS = "items"
-VIEW_NEWS_TITLE = "title"
-VIEW_NEWS_DESCRIPTION = "description"
-VIEW_NEWS_PICURL = "picurl"
-VIEW_NEWS_URL = "url"
-
-
-def loadview(viewcode, scope):
-    logging.debug("Begin to load view:\n%s" % viewcode)
-
-    viewjson = json.dumps(viewcode)
-    t = Template(viewjson)
-    viewjson = t.safe_substitute(scope)
-    viewcode = json.loads(viewjson)
-
-    viewdict = {
-        VIEW_TYPE_TEXT: loadview_text,
-        VIEW_TYPE_NEWS: loadview_news
-    }
-    return viewdict[viewcode[VIEW_TYPE]](viewcode,scope)
-
-
-def loadview_text(viewcode,scope):
-    '''
-    {
-        "type" : "text",
-        "content" : "content"
-    }
-    '''
-    return TextMessage(viewcode[VIEW_TEXT])
-
-
-def loadview_news(viewcode,scope):
-    '''
-    {
-        "type" : "news",
-        "items" : [
-            {
-                "title" : title,
-                "description" : description,
-                "picurl" : picurl,
-                "url" : url,
-                "repeat" : {
-                    "to" : one,
-                    "list" : list
-                }
-            },
-            ...
-        ]
-    }
-    '''
-    items = viewcode[VIEW_TYPE_ITEMS]
-    return NewsMessage(items)
+VIEW_ITEMS = "items"
+VIEW_TITLE = "title"
+VIEW_DESCRIPTION = "description"
+VIEW_URL = "url"
+VIEW_PICURL = "picurl"
+VIEW_REPEAT = "repeat"
+VIEW_TAG = "tag"
 
 
 def __parse_msg(xml):
@@ -195,13 +144,13 @@ class NewsMessage(Message):
         itemsxml = []
         for i in items[0]:
             logging.debug(i)
-            onexml = itemxml % (i[VIEW_NEWS_TITLE],i.get(VIEW_NEWS_DESCRIPTION,""),i.get(VIEW_NEWS_PICURL,""),i.get(VIEW_NEWS_URL,""))
+            onexml = itemxml % (i[VIEW_TITLE],i.get(VIEW_DESCRIPTION,""),i.get(VIEW_PICURL,""),i.get(VIEW_URL,""))
             itemsxml.append(onexml)
 
 
         if settings.read(settings.MOD_SETTING_MSG).has_key(settings.SET_NEWS_END):
             i = settings.read(settings.MOD_SETTING_MSG)[settings.SET_NEWS_END]
-            itemsxml.append(itemxml % (i[VIEW_NEWS_TITLE],i[VIEW_NEWS_DESCRIPTION],i[VIEW_NEWS_PICURL],i[VIEW_NEWS_URL]))
+            itemsxml.append(itemxml % (i[VIEW_TITLE],i[VIEW_DESCRIPTION],i[VIEW_PICURL],i[VIEW_URL]))
 
         articlesxml = "".join(itemsxml)
         self._xml = self._xml % (len(itemsxml), articlesxml)
