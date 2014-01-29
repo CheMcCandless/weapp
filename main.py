@@ -25,7 +25,7 @@ class WeApp(object):
         result = self.__control.run(msg,scope)
         scopeCon.update()
 
-        return result.getForPut(msg.getServer(),msg.getOpenID())
+        return result.get(msg.getServer(),msg.getOpenID(),getTextMode(scope))
 
     def _onInit(self):
         pass

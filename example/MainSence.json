@@ -18,5 +18,8 @@
          }
          ]
 
+     },
+     "textmod_view":{
+	"items":[{"title":"文字模式${textmod}"}]
      }
 }

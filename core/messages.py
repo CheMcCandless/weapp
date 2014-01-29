@@ -120,7 +120,9 @@ class TextMessage(Message):
 
 class NewsMessage(Message):
 
-    def __init__(self, *items):
+    def __init__(self, items):
+        self.__items = items
+        
         logging.debug("Items:" + items.__str__())
         self._xml = '''<xml>
         <ToUserName><![CDATA[$ToUserName]]></ToUserName>
@@ -142,7 +144,7 @@ class NewsMessage(Message):
         </item>'''
 
         itemsxml = []
-        for i in items[0]:
+        for i in items:
             logging.debug(i)
             onexml = itemxml % (i[VIEW_TITLE],i.get(VIEW_DESCRIPTION,""),i.get(VIEW_PICURL,""),i.get(VIEW_URL,""))
             itemsxml.append(onexml)
@@ -150,7 +152,19 @@ class NewsMessage(Message):
 
         if settings.read(settings.MOD_SETTING_MSG).has_key(settings.SET_NEWS_END):
             i = settings.read(settings.MOD_SETTING_MSG)[settings.SET_NEWS_END]
-            itemsxml.append(itemxml % (i[VIEW_TITLE],i[VIEW_DESCRIPTION],i[VIEW_PICURL],i[VIEW_URL]))
+            itemsxml.append(itemxml % (i[VIEW_TITLE],i.get(VIEW_DESCRIPTION,""),i.get(VIEW_PICURL,""),i.get(VIEW_URL,"")))
 
         articlesxml = "".join(itemsxml)
         self._xml = self._xml % (len(itemsxml), articlesxml)
+
+    def get(self,fromUserName, toUserName,bytext = False):
+        if bytext:
+            text = ""
+            for i in self.__items:
+                if i.has_key(VIEW_URL):
+                    text = text + "<a herf='" + i[VIEW_URL] + "'>" + i[VIEW_TITLE] +'</a>' + '\n\n'
+                else:
+                    text = text  + i[VIEW_TITLE] + '\n\n'
+            return TextMessage(text).getForPut(fromUserName,toUserName)
+        else:
+            return self.getForPut(fromUserName,toUserName)
