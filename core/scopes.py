@@ -3,6 +3,7 @@ For keep var between code and view(and it will be stronge in memcached by openID
 """
 KEY_SENCE = "_rainkey__sence"
 KEY_TEXTMOD = "_rainkey__textmod"
+KEY_SEVERNAME = "_rainkey__severname"
 SCOPE_LIFETIME = 300        # The time scope existed in memcached
 
 
@@ -28,11 +29,17 @@ def changeTextMode(scope):
     else:
         scope[KEY_TEXTMOD] = True
         
-    
+def setSeverName(scope,severName):
+    scope[KEY_SEVERNAME] = severName
+
+def getSeverName(scope):
+    return scope[KEY_SEVERNAME]
+        
 class ScopeControl(object):
     def __init__(self,openID,sever):
         self.__mckey = sever + "." + openID
         self.__scope = self.__loadScope()
+        setSeverName(self.__scope,sever)
         logging.debug("scope inited:\n%s" % self.__scope.__str__())
 
 

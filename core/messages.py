@@ -161,8 +161,8 @@ class NewsMessage(Message):
         if bytext:
             text = ""
             for i in self.__items:
-                if i.has_key(VIEW_URL):
-                    text = text + "<a herf='" + i[VIEW_URL] + "'>" + i[VIEW_TITLE] +'</a>' + '\n\n'
+                if i.get(VIEW_URL,"") != "":
+                    text = text + '<a href="' + i[VIEW_URL] + '">' + i[VIEW_TITLE] +'</a>' + '\n\n'
                 else:
                     text = text  + i[VIEW_TITLE] + '\n\n'
             return TextMessage(text).getForPut(fromUserName,toUserName)
